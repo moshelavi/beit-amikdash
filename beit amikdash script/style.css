@@ -89,7 +89,7 @@ body {
     justify-content: center;
     align-items: center;
     margin-bottom: 10px;
-    flex-direction: row-reverse; /* שים לב לשינוי כאן */
+    flex-direction: row-reverse;
 }
 
 .unit {
