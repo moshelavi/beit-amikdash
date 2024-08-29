@@ -12,7 +12,7 @@ popupContainer.innerHTML = `
     <div id="temple-counter">
         <h2>זמן שחלף מאז חורבן בית המקדש</h2>
         <div class="time-unit" id="time-units-container"></div>
-        <div class="action">"והראנו בבינינו ושמחנו בתיקונו"</div>
+        <div class="action">"והראנו בבניינו ושמחנו בתיקונו"</div>
     </div>
 `;
 
