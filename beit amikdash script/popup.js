@@ -1,10 +1,8 @@
-// יצירת אלמנט ה-link לטעינת קובץ ה-CSS
 const link = document.createElement('link');
 link.rel = 'stylesheet';
 link.href = 'style.css';
 document.head.appendChild(link);
 
-// יצירת אלמנט ה-popup
 const popupContainer = document.createElement('div');
 popupContainer.id = 'popup-container';
 
@@ -18,10 +16,9 @@ popupContainer.innerHTML = `
     </div>
 `;
 
-// הוספת הפופאפ לגוף המסמך
 document.body.appendChild(popupContainer);
 
-// פונקציות לוגיקה
+
 const DESTRUCTION_YEAR = 70;
 
 function getTishaBAvDate(year) {
@@ -43,7 +40,7 @@ function calculateTimeSinceDestruction() {
     const timeUnitsContainer = document.getElementById('time-units-container');
     timeUnitsContainer.innerHTML = '';
 
-    // שינוי הסדר כך שימים יופיעו קודם ולאחריהם השנים
+
     const TIME_UNITS = ['days', 'years'];
 
     TIME_UNITS.forEach((unit, index) => {
