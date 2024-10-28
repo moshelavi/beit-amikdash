@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>בית המקדש</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bona+Nova&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --main-color: #ff4500;
+            --secondary-color: #bbb;
+            --button-border-color: #fff;
+            --button-text-color: #fff;
+            --background-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --button-hover-color: #ff6347;
+            --scrollbar-bg: #333;
+            --scrollbar-thumb: #ff4500;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Bona Nova', serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--scrollbar-bg);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-thumb);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff6347;
+        }
+
+        #banner {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(68, 59, 55, 0.7)),
+                url('בית המקדש.gif');
+            background-size: 107%;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        #temple-counter {
+            position: relative;
+            z-index: 1;
+        }
+
+        .rounded-box {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        #temple-counter h2 {
+            color: var(--main-color);
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .time-unit {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-direction: row-reverse;
+        }
+
+        .unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 10px;
+        }
+
+        .unit-title {
+            font-size: 24px;
+            color: var(--secondary-color);
+            margin-top: 6px;
+        }
+
+        .unit-value-container {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .unit-value {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: rgba(142, 136, 136, 0.5);
+            font-family: 'Digital-7', Arial, sans-serif;
+            font-size: 60px;
+            font-weight: 700;
+            color: #fff;
+            min-width: 60px;
+            width: 60px;
+            margin: 0 4px;
+            height: 80px;
+            line-height: 80px;
+            text-align: center;
+            box-sizing: border-box;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        }
+
+        .colon {
+            font-size: 24px;
+            line-height: 40px;
+            font-family: 'Digital-7', Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            margin: 0 4px;
+            position: relative;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+            top: -4px;
+        }
+
+        .action {
+            font-size: 24px;
+            color: var(--main-color);
+            margin-top: 20px;
+            text-transform: uppercase;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+            justify-content: center;
+        }
+
+        .button-container button {
+            border: 2px solid var(--button-border-color);
+            background-color: transparent;
+            color: var(--button-text-color);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .button-container button:hover {
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        #additional-info {
+            margin-top: 40px;
+            padding: 20px;
+            text-align: center;
+            font-size: 18px;
+            color: var(--text-color);
+            direction: rtl;
+        }
+
+        #additional-info a {
+            color: var(--main-color);
+        }
+
+        .example-code {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: left;
+            direction: ltr;
+            margin: 10px 0;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .copy-button {
+            background: transparent;
+            border: none;
+            color: var(--main-color);
+            cursor: pointer;
+            padding: 5px;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .copy-button:hover {
+            color: var(--button-hover-color);
+        }
+
+        .code-content {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <section id="banner">
+        <div class="rounded-box">
+            <div id="temple-counter">
+                <h2>זמן שחלף מאז חורבן בית המקדש</h2>
+                <div class="time-unit" id="time-units-container"></div>
+                <div class="button-container">
+                    <button id="download-btn">להורדת התוסף</button>
+                    <button id="add-site-btn">הוספה לאתר</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="additional-info">
+        <h3>הוספת הפופאפ לאתר שלך</h3>
+        <p>כדי להוסיף את הפופאפ לאתר שלך, עליך להעתיק את הקוד הבא ולהדביק אותו בקוד האתר:</p>
+        <div class="example-code">
+            <span class="code-content">&lt;script
+                src="https://moshelavi.github.io/beit-amikdash/beit%20amikdash%20script/popup.js"&gt;&lt;/script&gt;</span>
+            <button class="copy-button" onclick="copyEmbedCode(this)">
+                <i class="fa fa-copy"></i>
+            </button>
+        </div>
+        <p>שימו לב! הקוד צריך להיות ממוקם בסוף תגית ה &lt;body&gt; של האתר שלכם.</p>
+        <p><strong>דוגמה לקוד אתר עם הפופאפ:</strong></p>
+        <div class="example-code">
+            <span class="code-content">
+                &lt;body&gt;<br>
+                &nbsp;&nbsp;...תוכן האתר...<br>
+                &nbsp;&nbsp;&lt;script
+                src="https://moshelavi.github.io/beit-amikdash/beit%20amikdash%20script/popup.js"&gt;&lt;/script&gt;<br>
+                &lt;/body&gt;
+            </span>
+            <button class="copy-button" onclick="copyEmbedCode(this)">
+                <i class="fa fa-copy"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const DESTRUCTION_YEAR = 70;
+
+        function getTishaBAvDate(year) {
+            return new Date(year, 7, 12);
+        }
+
+        function calculateTimeSinceDestruction() {
+            const today = new Date();
+            const tishaBAvDate = getTishaBAvDate(today.getFullYear());
+            const timeSinceDestruction = today - tishaBAvDate;
+            const daysSinceDestruction = Math.floor(timeSinceDestruction / (1000 * 60 * 60 * 24)) - 1;
+            const yearsSinceDestruction = today.getFullYear() - DESTRUCTION_YEAR;
+
+            const times = {
+                days: daysSinceDestruction,
+                years: yearsSinceDestruction,
+            };
+
+            const timeUnitsContainer = document.getElementById('time-units-container');
+            timeUnitsContainer.innerHTML = '';
+
+            const TIME_UNITS = ['years', 'days'];
+
+            TIME_UNITS.forEach((unit, index) => {
+                const unitContainer = document.createElement('div');
+                unitContainer.classList.add('unit');
+
+                const valueContainer = document.createElement('div');
+                valueContainer.classList.add('unit-value-container');
+
+                String(times[unit]).split('').reverse().forEach((digit) => {
+                    const digitElement = document.createElement('div');
+                    digitElement.classList.add('unit-value');
+                    digitElement.textContent = digit;
+                    valueContainer.appendChild(digitElement);
+                });
+
+                unitContainer.appendChild(valueContainer);
+
+                const titleElement = document.createElement('div');
+                titleElement.classList.add('unit-title');
+                titleElement.textContent = unit === 'years' ? 'שנים' : 'ימים';
+
+                unitContainer.appendChild(titleElement);
+                timeUnitsContainer.appendChild(unitContainer);
+
+                if (index < TIME_UNITS.length - 1) {
+                    const colonElement = document.createElement('div');
+                    colonElement.classList.add('colon');
+                    colonElement.textContent = ':';
+                    timeUnitsContainer.appendChild(colonElement);
+                }
+            });
+        }
+
+        function copyEmbedCode(button) {
+            const codeContent = button.parentElement.querySelector('.code-content').textContent;
+            navigator.clipboard.writeText(codeContent).then(() => {
+                const icon = button.querySelector('i');
+                icon.classList.remove('fa-copy');
+                icon.classList.add('fa-check');
+                setTimeout(() => {
+                    icon.classList.remove('fa-check');
+                    icon.classList.add('fa-copy');
+                }, 2000);
+            }, (err) => {
+                console.error('שגיאה בהעתקת הקוד: ', err);
+            });
+        }
+
+        function scrollToEmbedCode() {
+            document.getElementById('additional-info').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            calculateTimeSinceDestruction();
+            document.getElementById('add-site-btn').addEventListener('click', scrollToEmbedCode);
+        });
+    </script>
+</body>
+
+</html>
