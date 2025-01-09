@@ -272,22 +272,28 @@
         </div>
     </div>
 
+
     <script>
         const DESTRUCTION_YEAR = 70;
+        const DESTRUCTION_MONTH = 8;
+        const DESTRUCTION_DAY = 12;
 
         function getTishaBAvDate(year) {
-            return new Date(year, 7, 12);
+            return new Date(year, DESTRUCTION_MONTH - 1, DESTRUCTION_DAY);
         }
 
         function calculateTimeSinceDestruction() {
             const today = new Date();
-            const tishaBAvDate = getTishaBAvDate(today.getFullYear());
-            const timeSinceDestruction = today - tishaBAvDate;
-            const daysSinceDestruction = Math.floor(timeSinceDestruction / (1000 * 60 * 60 * 24)) - 1;
-            const yearsSinceDestruction = today.getFullYear() - DESTRUCTION_YEAR;
+            const currentYear = today.getFullYear();
+            const tishaBAvDateThisYear = new Date(currentYear, DESTRUCTION_MONTH - 1, DESTRUCTION_DAY);
+            const isBeforeTishaBAv = today < tishaBAvDateThisYear;
+            const effectiveYear = isBeforeTishaBAv ? currentYear - 1 : currentYear;
+            const yearsSinceDestruction = effectiveYear - DESTRUCTION_YEAR;
+            const lastTishaBAvDate = new Date(effectiveYear, DESTRUCTION_MONTH - 1, DESTRUCTION_DAY);
+            const daysSinceLastTishaBAv = Math.floor((today - lastTishaBAvDate) / (1000 * 60 * 60 * 24));
 
             const times = {
-                days: daysSinceDestruction,
+                days: daysSinceLastTishaBAv,
                 years: yearsSinceDestruction,
             };
 
@@ -352,6 +358,3 @@
             document.getElementById('add-site-btn').addEventListener('click', scrollToEmbedCode);
         });
     </script>
-</body>
-
-</html>
