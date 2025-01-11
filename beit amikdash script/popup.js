@@ -18,21 +18,24 @@ popupContainer.innerHTML = `
 
 document.body.appendChild(popupContainer);
 
-
 const DESTRUCTION_YEAR = 70;
 
 function getTishaBAvDate(year) {
-    return new Date(year, 7, 12);
+    return new Date(year, 7, 12); // חודש 7 הוא אוגוסט (0-מינואר)
 }
 
 function calculateTimeSinceDestruction() {
     const today = new Date();
-      const tishaBAvDate = getTishaBAvDate(today.getFullYear());
-
+    const tishaBAvDate = getTishaBAvDate(today.getFullYear());
     
+    // אם תשעה באב השנה עדיין לא קרה, נחזור לשנה הקודמת
+    if (today < tishaBAvDate) {
+        tishaBAvDate.setFullYear(tishaBAvDate.getFullYear() - 1);
+    }
+
     const timeSinceDestruction = today - tishaBAvDate;
-    const daysSinceDestruction = Math.floor(timeSinceDestruction / (1000 * 60 * 60 * 24)) - 1;
-    const yearsSinceDestruction = today.getFullYear() - DESTRUCTION_YEAR;
+    const daysSinceDestruction = Math.floor(timeSinceDestruction / (1000 * 60 * 60 * 24));
+    const yearsSinceDestruction = tishaBAvDate.getFullYear() - DESTRUCTION_YEAR;
 
     const times = {
         days: daysSinceDestruction,
@@ -41,7 +44,6 @@ function calculateTimeSinceDestruction() {
 
     const timeUnitsContainer = document.getElementById('time-units-container');
     timeUnitsContainer.innerHTML = '';
-
 
     const TIME_UNITS = ['days', 'years'];
 
