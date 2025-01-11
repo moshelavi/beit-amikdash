@@ -28,14 +28,17 @@ function calculateTimeSinceDestruction() {
     const today = new Date();
     let tishaBAvDate = getTishaBAvDate(today.getFullYear());
 
-    // אם היום הנוכחי הוא לפני תשעה באב של השנה, חזור לשנה הקודמת
     if (today < tishaBAvDate) {
         tishaBAvDate = getTishaBAvDate(today.getFullYear() - 1);
     }
 
     const timeSinceDestruction = today - tishaBAvDate;
     const daysSinceDestruction = Math.floor(timeSinceDestruction / (1000 * 60 * 60 * 24));
-    const yearsSinceDestruction = today.getFullYear() - DESTRUCTION_YEAR;
+    
+    let yearsSinceDestruction = today.getFullYear() - DESTRUCTION_YEAR;
+    if (today < tishaBAvDate) {
+        yearsSinceDestruction -= 1;
+    }
 
     const times = {
         days: daysSinceDestruction,
