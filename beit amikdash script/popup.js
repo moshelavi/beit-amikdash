@@ -27,7 +27,14 @@ function getTishaBAvDate(year) {
 
 function calculateTimeSinceDestruction() {
     const today = new Date();
-    const tishaBAvDate = getTishaBAvDate(today.getFullYear());
+    const currentYear = today.getFullYear();
+const tishaBAvDateThisYear = getTishaBAvDate(currentYear);
+const isBeforeTishaBAv = today < tishaBAvDateThisYear;
+const tishaBAvDate = isBeforeTishaBAv 
+    ? getTishaBAvDate(currentYear - 1) 
+    : tishaBAvDateThisYear;
+
+    
     const timeSinceDestruction = today - tishaBAvDate;
     const daysSinceDestruction = Math.floor(timeSinceDestruction / (1000 * 60 * 60 * 24)) - 1;
     const yearsSinceDestruction = today.getFullYear() - DESTRUCTION_YEAR;
