@@ -21,21 +21,21 @@ document.body.appendChild(popupContainer);
 const DESTRUCTION_YEAR = 70;
 
 function getTishaBAvDate(year) {
-    return new Date(year, 7, 12); // חודש 7 הוא אוגוסט (0-מינואר)
+    return new Date(year, 7, 12);
 }
 
 function calculateTimeSinceDestruction() {
     const today = new Date();
-    const tishaBAvDate = getTishaBAvDate(today.getFullYear());
-    
-    // אם תשעה באב השנה עדיין לא קרה, נחזור לשנה הקודמת
+    let tishaBAvDate = getTishaBAvDate(today.getFullYear());
+
+    // אם היום הנוכחי הוא לפני תשעה באב של השנה, חזור לשנה הקודמת
     if (today < tishaBAvDate) {
-        tishaBAvDate.setFullYear(tishaBAvDate.getFullYear() - 1);
+        tishaBAvDate = getTishaBAvDate(today.getFullYear() - 1);
     }
 
     const timeSinceDestruction = today - tishaBAvDate;
     const daysSinceDestruction = Math.floor(timeSinceDestruction / (1000 * 60 * 60 * 24));
-    const yearsSinceDestruction = tishaBAvDate.getFullYear() - DESTRUCTION_YEAR;
+    const yearsSinceDestruction = today.getFullYear() - DESTRUCTION_YEAR;
 
     const times = {
         days: daysSinceDestruction,
