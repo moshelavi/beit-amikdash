@@ -1,6 +1,6 @@
 const link = document.createElement('link');
 link.rel = 'stylesheet';
-link.href = 'style.css';
+link.href = 'beit%20amikdash%20script/style.css';
 document.head.appendChild(link);
 
 const popupContainer = document.createElement('div');
