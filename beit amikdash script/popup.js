@@ -1,5 +1,6 @@
 const link = document.createElement('link');
-<link rel="stylesheet" href="popup.css">
+link.rel = 'stylesheet';
+link.href = 'style.css';
 document.head.appendChild(link);
 
 const popupContainer = document.createElement('div');
