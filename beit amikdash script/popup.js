@@ -1,27 +1,13 @@
-const css = `
+
+(function() {
+
+    const css = `
 @import url('https://fonts.googleapis.com/css2?family=Bona+Nova+SC&display=swap');
-:root {
-    --background-color: #ffffff;
-    --overlay-background: rgba(114, 42, 42, 0.5);
-    --border-color: #444;
-    --text-color: #ffffff;
-    --highlight-color: #ffffff;
-    --secondary-text-color: #bbb;
-    --shadow-color: rgba(255, 255, 255, 0.1);
-    --overlay-opacity: 0.5;
-    --unit-background-color: rgba(142, 136, 136, 0.5);
-}
-body {
-    background-color: var(--background-color);
-    margin: 0;
-    font-family: 'Bona Nova SC', Arial, sans-serif;
-    color: var(--text-color);
-}
-#popup-container {
+#temple-popup-container {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    background-color: var(--overlay-background);
+    background-color: rgba(114, 42, 42, 0.5);
     border-radius: 15px;
     padding: 20px;
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
@@ -34,33 +20,35 @@ body {
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     transform: translateY(-10px);
+    font-family: 'Bona Nova SC', Arial, sans-serif;
+    color: #ffffff;
 }
-#popup-container:hover {
+#temple-popup-container:hover {
     transform: translateY(-15px);
     box-shadow: 0 18px 36px rgba(0, 0, 0, 0.3);
 }
-#popup-background {
+#temple-popup-background {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('בית המקדש.jpg');
-    background-size: cover;
+
+    background-image: url
     background-position: center;
     mix-blend-mode: overlay;
-    opacity: var(--overlay-opacity);
+    opacity: 0.5;
     z-index: 0;
     border-radius: 15px;
     filter: blur(1px);
 }
-#close-btn {
+#temple-close-btn {
     position: absolute;
     top: 5px;
     left: 5px;
     background-color: transparent;
     border: none;
-    color: var(--text-color);
+    color: #ffffff;
     font-size: 16px;
     cursor: pointer;
     z-index: 2;
@@ -70,48 +58,50 @@ body {
     z-index: 1;
 }
 #temple-counter h2 {
-    color: var(--highlight-color);
+    color: #ffffff;
     font-size: 18px;
     margin-bottom: 10px;
     font-weight: 700;
     line-height: 1.2;
+    font-family: 'Bona Nova SC', Arial, sans-serif;
 }
-.time-unit {
+.temple-time-unit {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 10px;
     flex-direction: row-reverse;
 }
-.unit {
+.temple-unit {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 0 5px;
 }
-.unit-title {
+.temple-unit-title {
     font-size: 12px;
-    color: var(--secondary-text-color);
+    color: #bbb;
     margin-top: 4px;
+    font-family: 'Bona Nova SC', Arial, sans-serif;
 }
-.unit-value-container {
+.temple-unit-value-container {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 }
-.unit-value {
+.temple-unit-value {
     display: flex;
     align-items: center;
     justify-content: center;
     border: none;
     padding: 5px;
     border-radius: 6px;
-    background-color: var(--unit-background-color);
+    background-color: rgba(142, 136, 136, 0.5);
     font-family: 'Digital-7', Arial, sans-serif;
     font-size: 20px;
     font-weight: 700;
-    color: var(--text-color);
+    color: #ffffff;
     min-width: 20px;
     width: 20px;
     margin: 0 1px;
@@ -120,7 +110,7 @@ body {
     text-align: center;
     box-sizing: border-box;
 }
-.colon {
+.temple-colon {
     font-size: 16px;
     line-height: 30px;
     font-family: 'Digital-7', Arial, sans-serif;
@@ -131,129 +121,132 @@ body {
     margin: 0 2px;
     position: relative;
     top: -8px;
+    color: #ffffff;
 }
-.action {
+.temple-action {
     font-size: 14px;
-    color: var(--highlight-color);
+    color: #ffffff;
     margin-top: 10px;
     text-transform: uppercase;
     font-weight: 700;
+    font-family: 'Bona Nova SC', Arial, sans-serif;
 }
 @media (max-width: 480px) {
-    #popup-container {
+    #temple-popup-container {
         width: 90vw;
         padding: 5px;
         right: 5vw;
     }
-    .unit-value {
+    .temple-unit-value {
         font-size: 16px;
         height: auto;
     }
-    .colon {
+    .temple-colon {
         font-size: 14px;
         line-height: 16px;
     }
 }
 `;
 
+   
+    const style = document.createElement('style');
+    style.textContent = css;
+    document.head.appendChild(style);
 
-const style = document.createElement('style');
-style.textContent = css;
-document.head.appendChild(style);
-
-
-const popupContainer = document.createElement('div');
-popupContainer.id = 'popup-container';
-popupContainer.innerHTML = `
-    <div id="popup-background"></div>
-    <button id="close-btn" onclick="closePopup()" aria-label="סגור">✕</button>
-    <div id="temple-counter">
-        <h2>זמן שחלף מאז חורבן בית המקדש</h2>
-        <div class="time-unit" id="time-units-container"></div>
-        <div class="action">"והראנו בבניינו ושמחנו בתיקונו"</div>
-    </div>
-`;
-document.body.appendChild(popupContainer);
+   
+    const DESTRUCTION_YEAR = 70;
 
 
-const DESTRUCTION_YEAR = 70;
+    const popupContainer = document.createElement('div');
+    popupContainer.id = 'temple-popup-container';
+    popupContainer.innerHTML = `
+        <div id="temple-popup-background"></div>
+        <button id="temple-close-btn" aria-label="סגור">✕</button>
+        <div id="temple-counter">
+            <h2>זמן שחלף מאז חורבן בית המקדש</h2>
+            <div class="temple-time-unit" id="temple-time-units-container"></div>
+            <div class="temple-action">"והראנו בבניינו ושמחנו בתיקונו"</div>
+        </div>
+    `;
+    document.body.appendChild(popupContainer);
 
-
-function getTishaBAvDate(year) {
-    return new Date(year, 7, 12);
-}
-
-
-function calculateTimeSinceDestruction() {
-    const today = new Date();
-    let tishaBAvDate = getTishaBAvDate(today.getFullYear());
-    
-    if (today < tishaBAvDate) {
-        tishaBAvDate = getTishaBAvDate(today.getFullYear() - 1);
+   
+    function getTishaBAvDate(year) {
+        return new Date(year, 7, 12);
     }
-    
-    const timeSinceDestruction = today - tishaBAvDate;
-    const daysSinceDestruction = Math.floor(timeSinceDestruction / (1000 * 60 * 60 * 24));
-    
-    let yearsSinceDestruction = today.getFullYear() - DESTRUCTION_YEAR;
-    if (today < tishaBAvDate) {
-        yearsSinceDestruction -= 1;
-    }
-    
-    const times = {
-        days: daysSinceDestruction,
-        years: yearsSinceDestruction,
-    };
-    
-    const timeUnitsContainer = document.getElementById('time-units-container');
-    timeUnitsContainer.innerHTML = '';
-    
-    const TIME_UNITS = ['days', 'years'];
-    TIME_UNITS.forEach((unit, index) => {
-        let unitValue = times[unit].toString().padStart(2, '0');
-        const unitContainer = document.createElement('div');
-        unitContainer.classList.add('unit');
+
+   
+    function calculateTimeSinceDestruction() {
+        const today = new Date();
+        let tishaBAvDate = getTishaBAvDate(today.getFullYear());
         
-        const valueContainer = document.createElement('div');
-        valueContainer.classList.add('unit-value-container');
+        if (today < tishaBAvDate) {
+            tishaBAvDate = getTishaBAvDate(today.getFullYear() - 1);
+        }
         
-        unitValue.split('').forEach(number => {
-            const numberElement = document.createElement('div');
-            numberElement.classList.add('unit-value');
-            numberElement.textContent = number;
-            valueContainer.appendChild(numberElement);
+        const timeSinceDestruction = today - tishaBAvDate;
+        const daysSinceDestruction = Math.floor(timeSinceDestruction / (1000 * 60 * 60 * 24));
+        
+        let yearsSinceDestruction = today.getFullYear() - DESTRUCTION_YEAR;
+        if (today < tishaBAvDate) {
+            yearsSinceDestruction -= 1;
+        }
+        
+        const times = {
+            days: daysSinceDestruction,
+            years: yearsSinceDestruction,
+        };
+        
+        const timeUnitsContainer = document.getElementById('temple-time-units-container');
+        timeUnitsContainer.innerHTML = '';
+        
+        const TIME_UNITS = ['days', 'years'];
+        TIME_UNITS.forEach((unit, index) => {
+            let unitValue = times[unit].toString().padStart(2, '0');
+            const unitContainer = document.createElement('div');
+            unitContainer.classList.add('temple-unit');
+            
+            const valueContainer = document.createElement('div');
+            valueContainer.classList.add('temple-unit-value-container');
+            
+            unitValue.split('').forEach(number => {
+                const numberElement = document.createElement('div');
+                numberElement.classList.add('temple-unit-value');
+                numberElement.textContent = number;
+                valueContainer.appendChild(numberElement);
+            });
+            
+            unitContainer.appendChild(valueContainer);
+            
+            const titleElement = document.createElement('div');
+            titleElement.classList.add('temple-unit-title');
+            titleElement.textContent = unit === 'years' ? 'שנים' : 'ימים';
+            unitContainer.appendChild(titleElement);
+            
+            timeUnitsContainer.appendChild(unitContainer);
+            
+            if (index < TIME_UNITS.length - 1) {
+                const colonElement = document.createElement('div');
+                colonElement.classList.add('temple-colon');
+                colonElement.textContent = ':';
+                timeUnitsContainer.appendChild(colonElement);
+            }
         });
         
-        unitContainer.appendChild(valueContainer);
-        
-        const titleElement = document.createElement('div');
-        titleElement.classList.add('unit-title');
-        titleElement.textContent = unit === 'years' ? 'שנים' : 'ימים';
-        unitContainer.appendChild(titleElement);
-        
-        timeUnitsContainer.appendChild(unitContainer);
-        
-        if (index < TIME_UNITS.length - 1) {
-            const colonElement = document.createElement('div');
-            colonElement.classList.add('colon');
-            colonElement.textContent = ':';
-            timeUnitsContainer.appendChild(colonElement);
-        }
-    });
-    
-    requestAnimationFrame(calculateTimeSinceDestruction);
-}
-
-
-function closePopup() {
-    const popupContainer = document.getElementById('popup-container');
-    if (popupContainer) {
-        popupContainer.style.display = 'none';
+        requestAnimationFrame(calculateTimeSinceDestruction);
     }
-}
 
+    
+    function closeTemplePopup() {
+        const popupContainer = document.getElementById('temple-popup-container');
+        if (popupContainer) {
+            popupContainer.style.display = 'none';
+        }
+    }
 
-window.closePopup = closePopup;
+  
+    document.getElementById('temple-close-btn').addEventListener('click', closeTemplePopup);
 
-
-calculateTimeSinceDestruction();
+  
+    calculateTimeSinceDestruction();
+})();
