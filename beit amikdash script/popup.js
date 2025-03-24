@@ -1,6 +1,8 @@
-
 (function() {
-
+  
+    const scriptPath = getScriptPath();
+    const imagePath = scriptPath + 'בית המקדש.jpg';
+    
     const css = `
 @import url('https://fonts.googleapis.com/css2?family=Bona+Nova+SC&display=swap');
 #temple-popup-container {
@@ -33,8 +35,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-
-    background-image: url
+    background-image: url('${imagePath}');
+    background-size: cover;
     background-position: center;
     mix-blend-mode: overlay;
     opacity: 0.5;
@@ -147,15 +149,12 @@
     }
 }
 `;
-
    
     const style = document.createElement('style');
     style.textContent = css;
     document.head.appendChild(style);
 
-   
     const DESTRUCTION_YEAR = 70;
-
 
     const popupContainer = document.createElement('div');
     popupContainer.id = 'temple-popup-container';
@@ -170,12 +169,10 @@
     `;
     document.body.appendChild(popupContainer);
 
-   
     function getTishaBAvDate(year) {
         return new Date(year, 7, 12);
     }
 
-   
     function calculateTimeSinceDestruction() {
         const today = new Date();
         let tishaBAvDate = getTishaBAvDate(today.getFullYear());
@@ -236,7 +233,6 @@
         requestAnimationFrame(calculateTimeSinceDestruction);
     }
 
-    
     function closeTemplePopup() {
         const popupContainer = document.getElementById('temple-popup-container');
         if (popupContainer) {
@@ -244,9 +240,21 @@
         }
     }
 
-  
+    function getScriptPath() {
+        const scripts = document.getElementsByTagName('script');
+        const currentScript = scripts[scripts.length - 1];
+
+        const scriptUrl = currentScript.src;
+        
+
+        const pathParts = scriptUrl.split('/');
+        pathParts.pop(); 
+        
+        return pathParts.join('/') + '/';
+    }
+
+
     document.getElementById('temple-close-btn').addEventListener('click', closeTemplePopup);
 
-  
     calculateTimeSinceDestruction();
 })();
