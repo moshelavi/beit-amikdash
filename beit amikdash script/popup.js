@@ -87,8 +87,8 @@
     font-family: 'Bona Nova SC', Arial, sans-serif;
 }
 .temple-unit-value-container {
-    display: flex;
-    flex-direction: row;
+     display: flex;
+    flex-direction: row-reverse;
     justify-content: center;
     align-items: center;
 }
