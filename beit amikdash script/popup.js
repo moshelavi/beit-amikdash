@@ -1,6 +1,6 @@
 (function() {
     const scriptPath = getScriptPath();
-    const imagePath = scriptPath + 'בית המקדש.JPG';
+    const imagePath = scriptPath + 'בית המקדש.jpg';
     
     const css = `
 @import url('https://fonts.googleapis.com/css2?family=Bona+Nova+SC&display=swap');
@@ -15,7 +15,7 @@
     z-index: 1000;
     overflow: hidden;
     max-width: 350px;
-    width: calc(100% - 60px);
+    width: auto;
     height: auto;
     box-sizing: border-box;
     text-align: center;
@@ -23,7 +23,6 @@
     transform: translateY(-10px);
     font-family: 'Bona Nova SC', Arial, sans-serif;
     color: #ffffff;
-    margin: 0 auto;
 }
 #temple-popup-container:hover {
     transform: translateY(-15px);
@@ -87,9 +86,8 @@
     font-family: 'Bona Nova SC', Arial, sans-serif;
 }
 .temple-unit-value-container {
-    direction: ltr;
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
 }
@@ -136,10 +134,9 @@
 }
 @media (max-width: 480px) {
     #temple-popup-container {
-        width: calc(100% - 20px);
+        width: 90vw;
         padding: 5px;
-        right: 10px;
-        left: 10px;
+        right: 5vw;
     }
     .temple-unit-value {
         font-size: 16px;
@@ -150,20 +147,12 @@
         line-height: 16px;
     }
 }
-@media (max-width: 320px) {
-    .temple-unit-value {
-        font-size: 14px;
-        padding: 3px;
-    }
-}
 `;
 
     const style = document.createElement('style');
     style.textContent = css;
     document.head.appendChild(style);
-
     const DESTRUCTION_YEAR = 70;
-
     const popupContainer = document.createElement('div');
     popupContainer.id = 'temple-popup-container';
     popupContainer.innerHTML = `
@@ -176,7 +165,6 @@
         </div>
     `;
     document.body.appendChild(popupContainer);
-
     function getTishaBAvDate(year) {
         return new Date(year, 7, 12);
     }
@@ -248,19 +236,20 @@
         }
     }
 
+   
     function getScriptPath() {
         const scripts = document.getElementsByTagName('script');
         const currentScript = scripts[scripts.length - 1];
         
         const scriptUrl = currentScript.src;
         
+
         const pathParts = scriptUrl.split('/');
-        pathParts.pop();
+        pathParts.pop(); 
         
         return pathParts.join('/') + '/';
     }
 
     document.getElementById('temple-close-btn').addEventListener('click', closeTemplePopup);
-
     calculateTimeSinceDestruction();
 })();
