@@ -1,7 +1,6 @@
 (function() {
-  
     const scriptPath = getScriptPath();
-    const imagePath = scriptPath + 'בית המקדש.jpg';
+    const imagePath = scriptPath + 'בית המקדש.JPG';
     
     const css = `
 @import url('https://fonts.googleapis.com/css2?family=Bona+Nova+SC&display=swap');
@@ -16,7 +15,7 @@
     z-index: 1000;
     overflow: hidden;
     max-width: 350px;
-    width: auto;
+    width: calc(100% - 60px);
     height: auto;
     box-sizing: border-box;
     text-align: center;
@@ -24,6 +23,7 @@
     transform: translateY(-10px);
     font-family: 'Bona Nova SC', Arial, sans-serif;
     color: #ffffff;
+    margin: 0 auto;
 }
 #temple-popup-container:hover {
     transform: translateY(-15px);
@@ -87,7 +87,8 @@
     font-family: 'Bona Nova SC', Arial, sans-serif;
 }
 .temple-unit-value-container {
-     display: flex;
+    direction: ltr;
+    display: flex;
     flex-direction: row-reverse;
     justify-content: center;
     align-items: center;
@@ -135,9 +136,10 @@
 }
 @media (max-width: 480px) {
     #temple-popup-container {
-        width: 90vw;
+        width: calc(100% - 20px);
         padding: 5px;
-        right: 5vw;
+        right: 10px;
+        left: 10px;
     }
     .temple-unit-value {
         font-size: 16px;
@@ -148,8 +150,14 @@
         line-height: 16px;
     }
 }
+@media (max-width: 320px) {
+    .temple-unit-value {
+        font-size: 14px;
+        padding: 3px;
+    }
+}
 `;
-   
+
     const style = document.createElement('style');
     style.textContent = css;
     document.head.appendChild(style);
@@ -243,16 +251,14 @@
     function getScriptPath() {
         const scripts = document.getElementsByTagName('script');
         const currentScript = scripts[scripts.length - 1];
-
+        
         const scriptUrl = currentScript.src;
         
-
         const pathParts = scriptUrl.split('/');
-        pathParts.pop(); 
+        pathParts.pop();
         
         return pathParts.join('/') + '/';
     }
-
 
     document.getElementById('temple-close-btn').addEventListener('click', closeTemplePopup);
 
