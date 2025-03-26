@@ -47,7 +47,7 @@
 #temple-close-btn {
     position: absolute;
     top: 5px;
-    right: 5px;
+    left: 5px;
     background-color: transparent;
     border: none;
     color: #ffffff;
@@ -57,10 +57,6 @@
     line-height: 1;
     padding: 0;
     margin: 0;
-}
-[dir="rtl"] #temple-close-btn {
-    right: auto;
-    left: 5px;
 }
 #temple-counter {
     position: relative;
