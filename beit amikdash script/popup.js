@@ -25,29 +25,17 @@
     color: #ffffff;
     direction: ltr;
 }
-#temple-popup-container:hover {
-    transform: translateY(-15px);
-    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.3);
+[dir="rtl"] #temple-close-btn {
+    left: 5px;
+    right: auto;
 }
-#temple-popup-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('${imagePath}');
-    background-size: cover;
-    background-position: center;
-    mix-blend-mode: overlay;
-    opacity: 0.5;
-    z-index: 0;
-    border-radius: 15px;
-    filter: blur(1px);
+[dir="ltr"] #temple-close-btn {
+    right: 5px;
+    left: auto;
 }
 #temple-close-btn {
     position: absolute;
     top: 5px;
-    right: 5px;
     background-color: transparent;
     border: none;
     color: #ffffff;
