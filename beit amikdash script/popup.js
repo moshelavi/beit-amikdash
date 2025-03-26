@@ -23,6 +23,7 @@
     transform: translateY(-10px);
     font-family: 'Bona Nova SC', Arial, sans-serif;
     color: #ffffff;
+    direction: ltr;
 }
 #temple-popup-container:hover {
     transform: translateY(-15px);
@@ -46,7 +47,7 @@
 #temple-close-btn {
     position: absolute;
     top: 5px;
-    left: 5px;
+    right: 5px;
     background-color: transparent;
     border: none;
     color: #ffffff;
@@ -71,7 +72,6 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 10px;
-    flex-direction: row-reverse;
 }
 .temple-unit {
     display: flex;
@@ -186,14 +186,14 @@
         }
         
         const times = {
-            days: daysSinceDestruction,
             years: yearsSinceDestruction,
+            days: daysSinceDestruction,
         };
         
         const timeUnitsContainer = document.getElementById('temple-time-units-container');
         timeUnitsContainer.innerHTML = '';
         
-        const TIME_UNITS = ['days', 'years'];
+        const TIME_UNITS = ['years', 'days'];
         TIME_UNITS.forEach((unit, index) => {
             let unitValue = times[unit].toString().padStart(2, '0');
             const unitContainer = document.createElement('div');
@@ -236,14 +236,12 @@
         }
     }
 
-   
     function getScriptPath() {
         const scripts = document.getElementsByTagName('script');
         const currentScript = scripts[scripts.length - 1];
         
         const scriptUrl = currentScript.src;
         
-
         const pathParts = scriptUrl.split('/');
         pathParts.pop(); 
         
