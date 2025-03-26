@@ -29,14 +29,6 @@
     transform: translateY(-15px);
     box-shadow: 0 18px 36px rgba(0, 0, 0, 0.3);
 }
-[dir="rtl"] #temple-close-btn {
-    left: 5px;
-    right: auto;
-}
-[dir="ltr"] #temple-close-btn {
-    right: 5px;
-    left: auto;
-}
 #temple-popup-background {
     position: absolute;
     top: 0;
@@ -55,12 +47,20 @@
 #temple-close-btn {
     position: absolute;
     top: 5px;
+    right: 5px;
     background-color: transparent;
     border: none;
     color: #ffffff;
     font-size: 16px;
     cursor: pointer;
     z-index: 2;
+    line-height: 1;
+    padding: 0;
+    margin: 0;
+}
+[dir="rtl"] #temple-close-btn {
+    right: auto;
+    left: 5px;
 }
 #temple-counter {
     position: relative;
