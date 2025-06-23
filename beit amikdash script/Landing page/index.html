@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="he">
 
 <head>
     <meta charset="UTF-8">
@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Bona+Nova&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://db.onlinewebfonts.com/c/1e5f9518cedc2205b9be575333531250?family=Digital-7">
 
     <style>
         :root {
@@ -20,12 +21,16 @@
             --button-hover-color: #ff6347;
             --scrollbar-bg: #333;
             --scrollbar-thumb: #ff4500;
+            --digit-height: 80px;
+            --digit-width: 60px;
+            --digit-font-size: 60px;
         }
 
         * {
             margin: 0;
             padding: 0;
             font-family: 'Bona Nova', serif;
+            box-sizing: border-box;
         }
 
         body {
@@ -55,7 +60,7 @@
         #banner {
             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(68, 59, 55, 0.7)),
                 url('בית המקדש.gif');
-            background-size: 107%;
+            background-size: cover;
             background-position: center;
             height: 100vh;
             display: flex;
@@ -110,30 +115,42 @@
 
         .unit-value-container {
             display: flex;
-            flex-direction: row-reverse;
             justify-content: center;
             align-items: center;
         }
 
         .unit-value {
+            border: none;
+            border-radius: 8px;
+            background-color: rgba(142, 136, 136, 0.5);
+            min-width: var(--digit-width);
+            width: var(--digit-width);
+            margin: 0 4px;
+            height: var(--digit-height);
+            box-sizing: border-box;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .digit-reel {
+            display: flex;
+            flex-direction: column;
+            transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transform: translateY(calc(var(--digit, 0) * var(--digit-height) * -1));
+        }
+
+        .digit-reel>span {
             display: flex;
             align-items: center;
             justify-content: center;
-            border: none;
-            padding: 20px;
-            border-radius: 8px;
-            background-color: rgba(142, 136, 136, 0.5);
             font-family: 'Digital-7', Arial, sans-serif;
-            font-size: 60px;
+            font-size: var(--digit-font-size);
             font-weight: 700;
             color: #fff;
-            min-width: 60px;
-            width: 60px;
-            margin: 0 4px;
-            height: 80px;
-            line-height: 80px;
+            width: var(--digit-width);
+            min-height: var(--digit-height);
+            line-height: var(--digit-height);
             text-align: center;
-            box-sizing: border-box;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
         }
 
@@ -193,6 +210,11 @@
             direction: rtl;
         }
 
+        #additional-info h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
         #additional-info a {
             color: var(--main-color);
         }
@@ -228,6 +250,86 @@
         .code-content {
             flex-grow: 1;
             margin-right: 10px;
+            word-break: break-all;
+            hyphens: auto;
+        }
+
+        @media (max-width: 768px) {
+            #temple-counter h2 {
+                font-size: 36px;
+            }
+
+            :root {
+                --digit-height: 60px;
+                --digit-width: 45px;
+                --digit-font-size: 45px;
+            }
+
+            .unit-title {
+                font-size: 18px;
+            }
+
+            .colon {
+                font-size: 20px;
+                top: -10px;
+            }
+
+            .button-container {
+                flex-direction: column;
+                gap: 15px;
+                margin-top: 30px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            #additional-info {
+                padding: 20px 15px;
+                font-size: 17px;
+            }
+
+            #additional-info h3 {
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #banner {
+                padding: 0 15px;
+            }
+
+            #temple-counter h2 {
+                font-size: 28px;
+                margin-bottom: 15px;
+            }
+
+            :root {
+                --digit-height: 50px;
+                --digit-width: 35px;
+                --digit-font-size: 35px;
+            }
+
+            .rounded-box {
+                padding: 15px;
+                backdrop-filter: blur(5px);
+            }
+
+            .unit-title {
+                font-size: 16px;
+            }
+
+            .colon {
+                font-size: 18px;
+                top: -8px;
+            }
+
+            #additional-info {
+                font-size: 16px;
+            }
+
+            #additional-info h3 {
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
         }
     </style>
 </head>
@@ -239,7 +341,7 @@
                 <h2>זמן שחלף מאז חורבן בית המקדש</h2>
                 <div class="time-unit" id="time-units-container"></div>
                 <div class="button-container">
-                    <button id="download-btn">להורדת התוסף</button>
+                    <button id="download-btn">צפייה בקוד המקור</button>
                     <button id="add-site-btn">הוספה לאתר</button>
                 </div>
             </div>
@@ -250,8 +352,9 @@
         <h3>הוספת הפופאפ לאתר שלך</h3>
         <p>כדי להוסיף את הפופאפ לאתר שלך, עליך להעתיק את הקוד הבא ולהדביק אותו בקוד האתר:</p>
         <div class="example-code">
-            <span class="code-content">&lt;script
-                src="https://moshelavi.github.io/beit-amikdash/beit%20amikdash%20script/popup.js"&gt;&lt;/script&gt;</span>
+            <code
+                class="code-content">&lt;script
+                src="https://moshelavi.github.io/beit-amikdash/beit%20amikdash%20script/popup.js"&gt;&lt;/script&gt;</code>
             <button class="copy-button" onclick="copyEmbedCode(this)">
                 <i class="fa fa-copy"></i>
             </button>
@@ -259,13 +362,13 @@
         <p>שימו לב! הקוד צריך להיות ממוקם בסוף תגית ה &lt;body&gt; של האתר שלכם.</p>
         <p><strong>דוגמה לקוד אתר עם הפופאפ:</strong></p>
         <div class="example-code">
-            <span class="code-content">
+            <code class="code-content">
                 &lt;body&gt;<br>
                 &nbsp;&nbsp;...תוכן האתר...<br>
                 &nbsp;&nbsp;&lt;script
                 src="https://moshelavi.github.io/beit-amikdash/beit%20amikdash%20script/popup.js"&gt;&lt;/script&gt;<br>
                 &lt;/body&gt;
-            </span>
+            </code>
             <button class="copy-button" onclick="copyEmbedCode(this)">
                 <i class="fa fa-copy"></i>
             </button>
@@ -274,69 +377,9 @@
 
 
     <script>
-        const DESTRUCTION_YEAR = 70;
-        const DESTRUCTION_MONTH = 8;
-        const DESTRUCTION_DAY = 12;
-
-        function getTishaBAvDate(year) {
-            return new Date(year, DESTRUCTION_MONTH - 1, DESTRUCTION_DAY);
-        }
-
-        function calculateTimeSinceDestruction() {
-            const today = new Date();
-            const currentYear = today.getFullYear();
-            const tishaBAvDateThisYear = new Date(currentYear, DESTRUCTION_MONTH - 1, DESTRUCTION_DAY);
-            const isBeforeTishaBAv = today < tishaBAvDateThisYear;
-            const effectiveYear = isBeforeTishaBAv ? currentYear - 1 : currentYear;
-            const yearsSinceDestruction = effectiveYear - DESTRUCTION_YEAR;
-            const lastTishaBAvDate = new Date(effectiveYear, DESTRUCTION_MONTH - 1, DESTRUCTION_DAY);
-            const daysSinceLastTishaBAv = Math.floor((today - lastTishaBAvDate) / (1000 * 60 * 60 * 24));
-
-            const times = {
-                days: daysSinceLastTishaBAv,
-                years: yearsSinceDestruction,
-            };
-
-            const timeUnitsContainer = document.getElementById('time-units-container');
-            timeUnitsContainer.innerHTML = '';
-
-            const TIME_UNITS = ['years', 'days'];
-
-            TIME_UNITS.forEach((unit, index) => {
-                const unitContainer = document.createElement('div');
-                unitContainer.classList.add('unit');
-
-                const valueContainer = document.createElement('div');
-                valueContainer.classList.add('unit-value-container');
-
-                String(times[unit]).split('').reverse().forEach((digit) => {
-                    const digitElement = document.createElement('div');
-                    digitElement.classList.add('unit-value');
-                    digitElement.textContent = digit;
-                    valueContainer.appendChild(digitElement);
-                });
-
-                unitContainer.appendChild(valueContainer);
-
-                const titleElement = document.createElement('div');
-                titleElement.classList.add('unit-title');
-                titleElement.textContent = unit === 'years' ? 'שנים' : 'ימים';
-
-                unitContainer.appendChild(titleElement);
-                timeUnitsContainer.appendChild(unitContainer);
-
-                if (index < TIME_UNITS.length - 1) {
-                    const colonElement = document.createElement('div');
-                    colonElement.classList.add('colon');
-                    colonElement.textContent = ':';
-                    timeUnitsContainer.appendChild(colonElement);
-                }
-            });
-        }
-
         function copyEmbedCode(button) {
-            const codeContent = button.parentElement.querySelector('.code-content').textContent;
-            navigator.clipboard.writeText(codeContent).then(() => {
+            const codeContent = button.parentElement.querySelector('.code-content').innerText;
+            navigator.clipboard.writeText(codeContent.trim()).then(() => {
                 const icon = button.querySelector('i');
                 icon.classList.remove('fa-copy');
                 icon.classList.add('fa-check');
@@ -354,7 +397,159 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            calculateTimeSinceDestruction();
             document.getElementById('add-site-btn').addEventListener('click', scrollToEmbedCode);
+            document.getElementById('download-btn').addEventListener('click', () => {
+                window.open('https://github.com/moshelavi/beit-amikdash', '_blank');
+            });
+
+            (function () {
+                const DESTRUCTION_YEAR = 70;
+                let elementsToUpdate = null;
+                let previousTimes = { years: -1, days: -1 };
+
+                function getTishaBAvGregorianDate(year) {
+                    const hebrewYear = year + 3760;
+                    const isHebrewLeap = (hYear) => ((hYear * 7) + 1) % 19 < 7;
+                    const hebrewEpoch = 347997;
+                    const daysInHebrewYear = (hYear) => elapsedDays(hYear + 1) - elapsedDays(hYear);
+                    const elapsedDays = (hYear) => {
+                        const months = Math.floor(((235 * hYear) - 234) / 19);
+                        const parts = 12084 + (13753 * months);
+                        let day = (months * 29) + Math.floor(parts / 25920);
+                        const dayOfWeek = day % 7;
+                        if (dayOfWeek === 2 || dayOfWeek === 4 || dayOfWeek === 6) { day++; }
+                        else if (dayOfWeek === 1 && (parts % 25920) >= 19440 && !isHebrewLeap(hYear)) { day += 2; }
+                        else if (dayOfWeek === 0 && (parts % 25920) >= 13676 && isHebrewLeap(hYear - 1)) { day++; }
+                        return day;
+                    };
+                    const fromJD = (jd) => {
+                        const z = Math.floor(jd + 0.5);
+                        const a = Math.floor((z - 1867216.25) / 36524.25);
+                        const b = z + 1 + a - Math.floor(a / 4);
+                        const c = b + 1524;
+                        const d = Math.floor((c - 122.1) / 365.25);
+                        const e = Math.floor(365.25 * d);
+                        const f = Math.floor((c - e) / 30.6001);
+                        const day = c - e - Math.floor(30.6001 * f);
+                        const month = f - (f > 13 ? 13 : 1);
+                        const gYear = d - (month > 2 ? 4716 : 4715);
+                        return new Date(Date.UTC(gYear, month - 1, day));
+                    };
+                    const yearDays = daysInHebrewYear(hebrewYear);
+                    let daysFromTishrei1 = (isHebrewLeap(hebrewYear) ? 238 : 209) + (yearDays % 10 === 5 ? 2 : (yearDays % 10 === 4 ? 1 : 0));
+                    const tishaBAvJd = hebrewEpoch + elapsedDays(hebrewYear) + daysFromTishrei1;
+                    const date = fromJD(tishaBAvJd);
+                    if (date.getUTCDay() === 6) { date.setUTCDate(date.getUTCDate() + 1); }
+                    return date;
+                }
+
+                function createCounterDOM() {
+                    const timeUnitsContainer = document.getElementById('time-units-container');
+                    timeUnitsContainer.innerHTML = '';
+                    timeUnitsContainer.setAttribute('aria-live', 'polite');
+                    const elements = { yearValueContainer: null, dayValueContainer: null, container: timeUnitsContainer };
+                    const TIME_UNITS_META = [{ key: 'years', title: 'שנים' }, { key: 'days', title: 'ימים' }];
+                    TIME_UNITS_META.forEach((meta, index) => {
+                        const unitContainer = document.createElement('div');
+                        unitContainer.classList.add('unit');
+                        const valueContainer = document.createElement('div');
+                        valueContainer.classList.add('unit-value-container');
+                        if (meta.key === 'years') { elements.yearValueContainer = valueContainer; }
+                        else { elements.dayValueContainer = valueContainer; }
+                        unitContainer.appendChild(valueContainer);
+                        const titleElement = document.createElement('div');
+                        titleElement.classList.add('unit-title');
+                        titleElement.textContent = meta.title;
+                        unitContainer.appendChild(titleElement);
+                        timeUnitsContainer.appendChild(unitContainer);
+                        if (index < TIME_UNITS_META.length - 1) {
+                            const colonElement = document.createElement('div');
+                            colonElement.classList.add('colon');
+                            colonElement.textContent = ':';
+                            colonElement.setAttribute('aria-hidden', 'true');
+                            timeUnitsContainer.appendChild(colonElement);
+                        }
+                    });
+                    return elements;
+                }
+
+                function updateDigit(reelElement, newDigit) {
+                    const digitAsNumber = parseInt(newDigit, 10);
+                    if (isNaN(digitAsNumber)) return;
+                    reelElement.style.setProperty('--digit', digitAsNumber);
+                }
+
+                function createDigitReel() {
+                    const numberContainer = document.createElement('div');
+                    numberContainer.classList.add('unit-value');
+                    const reelElement = document.createElement('div');
+                    reelElement.classList.add('digit-reel');
+                    for (let j = 0; j <= 9; j++) {
+                        const digitSpan = document.createElement('span');
+                        digitSpan.textContent = j;
+                        reelElement.appendChild(digitSpan);
+                    }
+                    numberContainer.appendChild(reelElement);
+                    return numberContainer;
+                }
+
+                function syncUnit(container, valueStr) {
+                    const currentDigits = container.children.length;
+                    const requiredDigits = valueStr.length || 1;
+                    const valueToDisplay = valueStr || '0';
+                    const structureChanged = currentDigits !== requiredDigits;
+                    if (requiredDigits > currentDigits) {
+                        for (let i = 0; i < requiredDigits - currentDigits; i++) { container.appendChild(createDigitReel()); }
+                    } else if (requiredDigits < currentDigits) {
+                        for (let i = 0; i < currentDigits - requiredDigits; i++) { container.removeChild(container.firstChild); }
+                    }
+                    const updateValues = () => {
+                        const reelElements = Array.from(container.children).map(child => child.querySelector('.digit-reel'));
+                        valueToDisplay.split('').forEach((char, i) => {
+                            if (reelElements[i]) { updateDigit(reelElements[i], char); }
+                        });
+                    };
+                    if (structureChanged || previousTimes.years === -1) {
+                        setTimeout(updateValues, 20);
+                    } else {
+                        updateValues();
+                    }
+                }
+
+                function updateCounterDisplay(elements, times) {
+                    if (times.years === previousTimes.years && times.days === previousTimes.days) { return; }
+                    const yearStr = times.years.toString();
+                    const dayStr = times.days.toString();
+                    syncUnit(elements.yearValueContainer, yearStr);
+                    syncUnit(elements.dayValueContainer, dayStr);
+                    elements.container.setAttribute('aria-label', `${times.years} שנים ו-${times.days} ימים`);
+                    previousTimes = times;
+                }
+
+                function runCounter() {
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    const currentYear = today.getFullYear();
+                    const tishaBAvThisYear = getTishaBAvGregorianDate(currentYear);
+                    let lastTishaBAv;
+                    let yearsSinceDestruction = currentYear - DESTRUCTION_YEAR;
+                    if (today < tishaBAvThisYear) {
+                        lastTishaBAv = getTishaBAvGregorianDate(currentYear - 1);
+                        yearsSinceDestruction -= 1;
+                    } else {
+                        lastTishaBAv = tishaBAvThisYear;
+                    }
+                    const timeDiff = today - lastTishaBAv;
+                    const daysSinceLastTishaBAv = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                    const times = { years: yearsSinceDestruction, days: daysSinceLastTishaBAv };
+                    updateCounterDisplay(elementsToUpdate, times);
+                }
+
+                elementsToUpdate = createCounterDOM();
+                runCounter();
+            })();
         });
     </script>
+</body>
+
+</html>
