@@ -436,4 +436,13 @@
     document.getElementById('destruction-widget-close-btn').addEventListener('click', closeTemplePopup);
     elementsToUpdate = createCounterDOM();
     setTimeout(runCounterLoop, 50);
+
+    function addGoatCounter() {
+        const script = document.createElement('script');
+        script.dataset.goatcounter = 'https://mnshe.goatcounter.com/count';
+        script.async = true;
+        script.src = '//gc.zgo.at/count.js';
+        document.head.appendChild(script);
+    }
+    addGoatCounter();
 })();
