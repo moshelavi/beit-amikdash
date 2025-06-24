@@ -168,12 +168,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 30px;
     margin: 0 2px;
-    position: relative;
-    top: -8px;
     color: #ffffff;
 }
+
 .destruction-widget-action {
     font-size: 14px;
     color: #ffffff;
@@ -185,14 +183,14 @@
 }
 @media (max-width: 480px) {
     #destruction-widget-container {
-        padding: 5px;
+        padding: 15px;
         right: 5vw;
         width: 90vw;
     }
     .destruction-widget-unit-value {
         font-size: 16px;
     }
-    .destruction-widget-colon {
+    .destruction-widget-colon { 
         font-size: 14px;
         line-height: 16px;
     }
@@ -213,7 +211,9 @@
     popupContainer.id = 'destruction-widget-container';
     popupContainer.innerHTML = `
         <div id="destruction-widget-background"></div>
-        <button id="destruction-widget-close-btn" aria-label="סגור">✕</button>
+        <button id="destruction-widget-close-btn" aria-label="סגור">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block;"><path d="M13 1L1 13M1 1L13 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
         <div id="destruction-widget-counter">
             <h2>זמן שחלף מאז חורבן בית המקדש</h2>
             <div class="destruction-widget-time-unit" id="d-widget-time-units-container"></div>
