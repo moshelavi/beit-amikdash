@@ -191,7 +191,6 @@
     }
     .destruction-widget-unit-value {
         font-size: 16px;
-        height: auto;
     }
     .destruction-widget-colon {
         font-size: 14px;
