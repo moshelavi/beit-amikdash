@@ -108,7 +108,7 @@
 .destruction-widget-time-unit {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: baseline;
     margin-bottom: 10px;
 }
 .destruction-widget-unit {
@@ -162,7 +162,7 @@
     text-align: center;
 }
 .destruction-widget-colon {
-    font-size: 16px;
+    font-size: 20px;
     line-height: 30px;
     font-family: 'Digital-7', Arial, sans-serif;
     display: flex;
@@ -192,7 +192,7 @@
     }
     .destruction-widget-colon { 
         font-size: 14px;
-        line-height: 16px;
+        line-height: 30px;
     }
 }
 
