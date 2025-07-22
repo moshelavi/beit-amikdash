@@ -1,4 +1,4 @@
-function initBeitAmikdashPopup() {
+(function () {
     function addFont(href) {
         const link = document.createElement('link');
         link.rel = 'stylesheet';
@@ -31,7 +31,7 @@ function initBeitAmikdashPopup() {
     border-radius: 15px;
     padding: 20px;
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
-    z-index: 2147483647;
+    z-index: 1000;
     overflow: hidden;
     max-width: 350px;
     width: auto;
@@ -405,7 +405,7 @@ function initBeitAmikdashPopup() {
             popupContainer.classList.add('closing');
             setTimeout(() => {
                 popupContainer.style.display = 'none';
-                localStorage.setItem(LOCAL_STORAGE_CLOSED_KEY, 'true');
+                localStorage.setItem(LOCAL_STORAGE_CLOSED_KEY, Date.now().toString());
             }, 400);
         }
     }
@@ -427,10 +427,18 @@ function initBeitAmikdashPopup() {
         window.location.href = projectPageUrl;
     });
 
-    if (localStorage.getItem(LOCAL_STORAGE_CLOSED_KEY) === 'true') {
-        console.log('Counter widget is hidden because it was closed previously. To show it again, clear the "' + LOCAL_STORAGE_CLOSED_KEY + '" key from your browser\'s localStorage for this site.');
-        popupContainer.style.display = 'none';
-        return;
+    const closedTimestamp = localStorage.getItem(LOCAL_STORAGE_CLOSED_KEY);
+    if (closedTimestamp) {
+        const HIDE_DURATION = 15 * 60 * 1000;
+        const timeSinceClosed = Date.now() - parseInt(closedTimestamp, 10);
+
+        if (timeSinceClosed < HIDE_DURATION) {
+            console.log('Counter widget is hidden because it was closed recently. It will reappear after 15 minutes.');
+            popupContainer.style.display = 'none';
+            return;
+        } else {
+            localStorage.removeItem(LOCAL_STORAGE_CLOSED_KEY);
+        }
     }
 
     document.getElementById('destruction-widget-close-btn').addEventListener('click', closeTemplePopup);
@@ -445,11 +453,4 @@ function initBeitAmikdashPopup() {
         document.head.appendChild(script);
     }
     addGoatCounter();
-}
-
-
-if (document.readyState === 'complete') {
-    initBeitAmikdashPopup();
-} else {
-    window.addEventListener('load', initBeitAmikdashPopup);
-}
+})();
