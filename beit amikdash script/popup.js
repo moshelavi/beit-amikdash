@@ -31,7 +31,7 @@
     border-radius: 15px;
     padding: 20px;
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
+    z-index: 2147483647;
     overflow: hidden;
     max-width: 350px;
     width: auto;
