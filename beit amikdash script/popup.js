@@ -1,4 +1,4 @@
-(function () {
+function initBeitAmikdashPopup() {
     function addFont(href) {
         const link = document.createElement('link');
         link.rel = 'stylesheet';
@@ -445,4 +445,11 @@
         document.head.appendChild(script);
     }
     addGoatCounter();
-})();
+}
+
+
+if (document.readyState === 'complete') {
+    initBeitAmikdashPopup();
+} else {
+    window.addEventListener('load', initBeitAmikdashPopup);
+}
