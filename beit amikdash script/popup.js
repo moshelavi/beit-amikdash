@@ -10,6 +10,7 @@
 
     const scriptPath = getScriptPath();
     const imagePath = scriptPath + encodeURIComponent('בית המקדש.jpg');
+    const videoPath = scriptPath + encodeURIComponent('דמעות.mp4');
 
     const css = `
 @keyframes fadeInSlideUp {
@@ -67,6 +68,19 @@
     border-radius: 15px;
     filter: blur(1px);
 }
+#destruction-widget-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mix-blend-mode: overlay;
+    opacity: 0.4;
+    z-index: 1;
+    border-radius: 15px;
+    transition: opacity 0.3s ease;
+}
 #destruction-widget-close-btn {
     position: absolute;
     top: 5px;
@@ -86,15 +100,19 @@
     align-items: center;
     justify-content: center;
     transition: background-color 0.2s ease;
-    z-index: 2;
+    z-index: 3;
 }
 
 #destruction-widget-close-btn:hover {
     background-color: rgba(0, 0, 0, 0.2);
 }
+
+#destruction-widget-container:hover #destruction-widget-video {
+    opacity: 0.6;
+}
 #destruction-widget-counter {
     position: relative;
-    z-index: 1;
+    z-index: 2;
 }
 #destruction-widget-counter h2 {
     color: #ffffff;
@@ -181,12 +199,12 @@
     font-family: 'Bona Nova SC', Arial, sans-serif;
     text-shadow: 0 1px 3px rgba(0,0,0,0.5);
 }
-@media (max-width: 480px) {
+@media (max-width: 480px) { 
     #destruction-widget-container {
         padding: 15px;
         right: 5vw;
         width: 90vw;
-    }
+    } 
     .destruction-widget-unit-value {
         font-size: 16px;
     }
@@ -200,6 +218,24 @@
     opacity: 0;
     transform: translateY(20px);
 }
+
+@media (prefers-reduced-motion: reduce) {
+    #destruction-widget-container,
+    .destruction-widget-digit-reel {
+        animation: none;
+        transition: none;
+    }
+
+    #destruction-widget-container {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    #destruction-widget-container:hover {
+        transform: translateY(0);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+    }
+}
 `;
 
     const style = document.createElement('style');
@@ -210,6 +246,9 @@
     const popupContainer = document.createElement('div');
     popupContainer.id = 'destruction-widget-container';
     popupContainer.innerHTML = `
+        <video id="destruction-widget-video" autoplay muted loop playsinline>
+            <source src="${videoPath}" type="video/mp4">
+        </video>
         <div id="destruction-widget-background"></div>
         <button id="destruction-widget-close-btn" aria-label="סגור">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block;"><path d="M13 1L1 13M1 1L13 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -217,7 +256,7 @@
         <div id="destruction-widget-counter">
             <h2>זמן שחלף מאז חורבן בית המקדש</h2>
             <div class="destruction-widget-time-unit" id="d-widget-time-units-container"></div>
-            <div class="destruction-widget-action">"והראנו בבניינו ושמחנו בתיקונו"</div>
+            <p class="destruction-widget-action">"והראנו בבניינו ושמחנו בתיקונו"</p>
         </div>
     `;
     document.body.appendChild(popupContainer);
@@ -286,7 +325,7 @@
         TIME_UNITS_META.forEach((meta, index) => {
             const unitContainer = document.createElement('div');
             unitContainer.classList.add('destruction-widget-unit');
-            const valueContainer = document.createElement('div');
+            const valueContainer = document.createElement('time');
             valueContainer.classList.add('destruction-widget-unit-value-container');
             if (meta.key === 'years') {
                 elements.yearValueContainer = valueContainer;
@@ -294,13 +333,13 @@
                 elements.dayValueContainer = valueContainer;
             }
             unitContainer.appendChild(valueContainer);
-            const titleElement = document.createElement('div');
+            const titleElement = document.createElement('span');
             titleElement.classList.add('destruction-widget-unit-title');
             titleElement.textContent = meta.title;
             unitContainer.appendChild(titleElement);
             timeUnitsContainer.appendChild(unitContainer);
             if (index < TIME_UNITS_META.length - 1) {
-                const colonElement = document.createElement('div');
+                const colonElement = document.createElement('span');
                 colonElement.classList.add('destruction-widget-colon');
                 colonElement.textContent = ':';
                 colonElement.setAttribute('aria-hidden', 'true');
@@ -396,7 +435,11 @@
             days: daysSinceLastTishaBAv,
         };
         updateCounterDisplay(elementsToUpdate, times);
-        setTimeout(runCounterLoop, 1000);
+
+        const now = new Date();
+        const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 5);
+        const msUntilNextUpdate = tomorrow - now;
+        setTimeout(runCounterLoop, msUntilNextUpdate);
     }
 
     function closeTemplePopup() {
